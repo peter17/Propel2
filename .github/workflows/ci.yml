@@ -18,18 +18,28 @@ jobs:
                 symfony-version: ['3-min', '3-max', '4-min', '4-max', '5-min', '5-max']
 
         steps:
+            - name: Install PHP
+              run: |
+                echo "PHP Version: ${{ matrix.php-version }}"
+
+            - name: Install PostgreSQL
+              if: ${{ matrix.db-type }} === pgsql
+              run: |
+                  echo "MariaDB Version: ${{ matrix.postgres-version }}"
+
+            - name: Install MySql
+              if: ${{ matrix.db-type }} === mysql
+              run: |
+                  echo "MariaDB Version: ${{ matrix.mariadb-version }}"
+
+            - name: Install Composer
+              run: |
+                  echo "Symfony Version: ${{ matrix.symfony-version }}"
+
             - name: Checkout
               uses: actions/checkout@v1
               with:
                   fetch-depth: 1
-
-            - name: print-info
-              run: |
-                  echo "PHP Version: ${{ matrix.php-version }}"
-                  echo "DB Type: ${{ matrix.db-type }}"
-                  echo "PostresSQL Version: ${{ matrix.postgres-version }}"
-                  echo "MariaDB Version: ${{ matrix.mariadb-version }}"
-                  echo "Symfony Version: ${{ matrix.symfony-version }}"
 
 #    code-style-and-static-analysis:
 #        runs-on: ubuntu-18.04
