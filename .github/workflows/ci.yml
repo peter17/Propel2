@@ -17,6 +17,21 @@ jobs:
                 mariadb-version: ['10.1', '10.2', '10.3', '10.4']
                 symfony-version: ['3-min', '3-max', '4-min', '4-max', '5-min', '5-max']
 
+            exclude:
+                - db-type: sqlite
+                  postgres-version: ['9.5', '9.6', '10', '11', '12']
+                  mariadb-version: ['10.1', '10.2', '10.3', '10.4']
+
+                - db-type: mysql
+                  postgres-version: ['9.5', '9.6', '10', '11', '12']
+
+                - db-type: pgsql
+                  mariadb-version: ['10.1', '10.2', '10.3', '10.4']
+
+                - db-type: agnostic
+                  postgres-version: ['9.5', '9.6', '10', '11', '12']
+                  mariadb-version: ['10.1', '10.2', '10.3', '10.4']
+
         steps:
             - name: Install PHP
               run: |
