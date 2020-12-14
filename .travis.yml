@@ -49,7 +49,7 @@ jobs:
       services:
       addons:
         mariadb: 10.1
-# @todo: This job is failinig due to old Travis nightly image
+# @todo: This job is failing due to old Travis nightly image
 #    - php: nightly
 #      dist: trusty
 #      env: DB=mysql MARIADB=10.1
