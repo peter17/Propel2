@@ -8,9 +8,9 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php-version: ['7.2', '7.4']
-                db-type: [sqlite, mysql, pgsql, agnostic]
-                symfony-version: [ '3-min', '3-max', '4-min', '4-max', '5-min', '5-max' ]
+                php-version: ['7.2']
+                db-type: [mysql]
+                symfony-version: [ '3-min' ]
         steps:
             - name: Install PostgreSQL latest
               if: matrix.db-type == 'pgsql' && matrix.php-version == '7.4'
@@ -41,25 +41,31 @@ jobs:
 
             - name: Checkout
               uses: actions/checkout@v2
+
             - name: Setup PHP, with composer and extensions
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php-version }}
                   extensions: json, libxml, pdo, pdo_mysql, pdo_sqlite, pdo_pgsql, sqlite3
                   coverage: none
+
             - name: Get composer cache directory
               id: composer-cache
               run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
             - name: Cache composer dependencies
               uses: actions/cache@v1
               with:
                   path: ${{ steps.composer-cache.outputs.dir }}
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
                   restore-keys: ${{ runner.os }}-composer-
+
             - name: Move specific composer.json (Symfony version ${{ matrix.symfony-version }})
               run: mv tests/composer/composer-symfony${{ matrix.symfony-version }}.json composer.json
+
             - name: Install dependencies (Symfony version ${{ matrix.symfony-version }})
-              run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+              run: composer install --no-progress --prefer-dist --optimize-autoloader
+
             - name: Setup Postgresql dabase for test suite
               if: matrix.db-type == 'pgsql'
               run: tests/bin/setup.pgsql.sh
@@ -68,16 +74,19 @@ jobs:
                   DB_NAME: 'propel-tests'
                   DB_USER: 'postgres'
                   DB_PW: 'postgres'
+
             - name: Setup the dabase for test suite
               if: matrix.db-type != 'agnostic' && matrix.db-type != 'pgsql'
               run: tests/bin/setup.${{ matrix.db-type }}.sh
+
             - name: Run Postgresql tests
               if: matrix.db-type == 'pgsql'
-              run: tests/bin/phpunit.pgsql.sh
+              run: vendor/bin/phpunit -c pgsql.phpunit.xml
               env:
                   DB_NAME: 'propel-tests'
                   DB_USER: 'postgres'
                   DB_PW: 'postgres'
+
             - name: Run tests
               if: matrix.db-type != 'pgsql'
-              run: tests/bin/phpunit.${{ matrix.db-type }}.sh
+              run: vendor/bin/phpunit -c ${{ matrix.db-type }}.phpunit.xml
