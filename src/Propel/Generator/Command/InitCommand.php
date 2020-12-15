@@ -117,7 +117,7 @@ class InitCommand extends AbstractCommand
             }
 
             $options['user'] = $consoleHelper->askQuestion('Please enter your database user', 'root');
-            $options['password'] = $consoleHelper->askHiddenResponse('Please enter your database password');
+            $options['password'] = $consoleHelper->askHiddenResponse('Please enter your database password', false);
 
             $options['charset'] = $consoleHelper->askQuestion('Which charset would you like to use?', 'utf8');
         } while (!$this->testConnection($consoleHelper, $options));
