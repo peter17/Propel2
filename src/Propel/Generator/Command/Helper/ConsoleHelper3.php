@@ -56,8 +56,11 @@ class ConsoleHelper3 extends QuestionHelper implements ConsoleHelperInterface
         $question = new Question($this->formatQuestion($question));
         $question->setHidden(true);
         $question->setHiddenFallback($fallback);
+echo "This is only a test\n";
+$answer = parent::ask($this->input, $this->output, $question);
+echo $answer . PHP_EOL;
 
-        return parent::ask($this->input, $this->output, $question);
+        return $answer;
     }
 
     /**
