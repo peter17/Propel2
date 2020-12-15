@@ -143,11 +143,11 @@ class InitCommandTest extends TestCaseFixtures
 
         if ($this->getDriver() !== 'sqlite') {
             $inputs[] = array_shift($dsnArray);
-            $inputs[] = null;
+            $inputs[] = '';
         }
         $inputs = array_merge($inputs, [
             $dsnArray[0],
-            isset($dsnArray[1]) ? $dsnArray[1] : null,
+            isset($dsnArray[1]) ? $dsnArray[1] : '',
             isset($dsnArray[2]) ? $dsnArray[2] : '',
             'utf8',
             'no',
