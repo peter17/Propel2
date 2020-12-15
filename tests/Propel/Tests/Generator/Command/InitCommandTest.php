@@ -57,8 +57,6 @@ class InitCommandTest extends TestCaseFixtures
      */
     public function testExecute()
     {
-        QuestionHelper::disableStty();
-
         if (!method_exists(CommandTester::class, 'setInputs')) {
             $this->markTestSkipped('Interactive console input was not present in some earlier versions of symfony/console');
         }
