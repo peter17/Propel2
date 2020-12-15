@@ -54,7 +54,7 @@ class ConsoleHelper3 extends QuestionHelper implements ConsoleHelperInterface
     public function askHiddenResponse($question, $fallback = true)
     {
         $question = new Question($this->formatQuestion($question));
-//        $question->setHidden(true);
+        $question->setHidden(true);
         $question->setHiddenFallback($fallback);
 
         return parent::ask($this->input, $this->output, $question);
