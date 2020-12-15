@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Terminal;
 
 class ConsoleHelper3 extends QuestionHelper implements ConsoleHelperInterface
 {
@@ -53,6 +54,8 @@ class ConsoleHelper3 extends QuestionHelper implements ConsoleHelperInterface
      */
     public function askHiddenResponse($question, $fallback = true)
     {
+        echo sprintf('Has stty: ', Terminal::hasSttyAvailable());
+        
         $question = new Question($this->formatQuestion($question));
         $question->setHidden(true);
         $question->setHiddenFallback($fallback);
