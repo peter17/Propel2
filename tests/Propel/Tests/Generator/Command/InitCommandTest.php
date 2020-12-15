@@ -143,7 +143,7 @@ class InitCommandTest extends TestCaseFixtures
         $inputs = array_merge($inputs, [
             $dsnArray[0],
             isset($dsnArray[1]) ? $dsnArray[1] : null,
-            isset($dsnArray[2]) ? $dsnArray[2] : null,
+            isset($dsnArray[2]) ? $dsnArray[2] : true,
             'utf8',
             'no',
             $this->dir,
