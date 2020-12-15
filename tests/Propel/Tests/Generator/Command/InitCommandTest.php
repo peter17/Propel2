@@ -74,6 +74,9 @@ class InitCommandTest extends TestCaseFixtures
         $commandTester->setInputs($this->getInputsArray());
         $commandTester->execute(['command' => $command->getName()]);
 
+        $output = $commandTester->getDisplay();
+        $this->assertSame('Just to see what we get...', $output);
+
         $this->assertStringContainsString('Propel 2 is ready to be used!', $commandTester->getDisplay());
         $this->assertTrue(file_exists($this->dir . '/schema.xml'), 'Example schema file created.');
         $this->assertTrue(file_exists($this->dir . '/propel.yml'), 'Configuration file created.');
@@ -90,6 +93,8 @@ class InitCommandTest extends TestCaseFixtures
      */
     public function testExecuteAborted()
     {
+        $this->markTestSkipped();
+
         if (!method_exists(CommandTester::class, 'setInputs')) {
             $this->markTestSkipped('Interactive console input was not present in some earlier versions of symphony/console');
         }
@@ -143,7 +148,7 @@ class InitCommandTest extends TestCaseFixtures
         $inputs = array_merge($inputs, [
             $dsnArray[0],
             isset($dsnArray[1]) ? $dsnArray[1] : null,
-            isset($dsnArray[2]) ? $dsnArray[2] : true,
+            isset($dsnArray[2]) ? $dsnArray[2] : '',
             'utf8',
             'no',
             $this->dir,
