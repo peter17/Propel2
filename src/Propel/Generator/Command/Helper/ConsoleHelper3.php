@@ -54,7 +54,7 @@ class ConsoleHelper3 extends QuestionHelper implements ConsoleHelperInterface
      */
     public function askHiddenResponse($question, $fallback = true)
     {
-        echo sprintf('Has stty: ', Terminal::hasSttyAvailable() ? 'true' : 'false');
+        echo sprintf('Has stty: %s', Terminal::hasSttyAvailable() ? 'true' : 'false');
 
         $question = new Question($this->formatQuestion($question));
         $question->setHidden(true);
