@@ -10,7 +10,7 @@ jobs:
             matrix:
                 php-version: ['7.2']
                 db-type: [mysql]
-                symfony-version: [ '3-min' ]
+                symfony-version: [ '3-min', '4-max' ]
         steps:
             - name: Install PostgreSQL latest
               if: matrix.db-type == 'pgsql' && matrix.php-version == '7.4'
