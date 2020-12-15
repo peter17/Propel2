@@ -74,8 +74,8 @@ class InitCommandTest extends TestCaseFixtures
         $commandTester->setInputs($this->getInputsArray());
         $commandTester->execute(['command' => $command->getName()]);
 
-        $output = $commandTester->getDisplay();
-        $this->assertSame('Just to see what we get...', $output);
+//        $output = $commandTester->getDisplay();
+//        $this->assertSame('Just to see what we get...', $output);
 
         $this->assertStringContainsString('Propel 2 is ready to be used!', $commandTester->getDisplay());
         $this->assertTrue(file_exists($this->dir . '/schema.xml'), 'Example schema file created.');
@@ -143,12 +143,12 @@ class InitCommandTest extends TestCaseFixtures
 
         if ($this->getDriver() !== 'sqlite') {
             $inputs[] = array_shift($dsnArray);
-            $inputs[] = '';
+            $inputs[] = null;
         }
         $inputs = array_merge($inputs, [
             $dsnArray[0],
-            isset($dsnArray[1]) ? $dsnArray[1] : '',
-            isset($dsnArray[2]) ? $dsnArray[2] : '',
+            isset($dsnArray[1]) ? $dsnArray[1] : null,
+            isset($dsnArray[2]) ? $dsnArray[2] : null,
             'utf8',
             'no',
             $this->dir,
