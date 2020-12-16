@@ -8,9 +8,9 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php-version: ['7.2']
-                db-type: [mysql]
-                symfony-version: [ '3-min' ]
+                php-version: [ '7.2', '7.4' ]
+                db-type: [ sqlite, mysql, pgsql, agnostic ]
+                symfony-version: [ '3-min', '3-max', '4-min', '4-max', '5-min', '5-max' ]
         steps:
             - name: Install PostgreSQL latest
               if: matrix.db-type == 'pgsql' && matrix.php-version == '7.4'
