@@ -10,7 +10,7 @@ jobs:
             matrix:
                 php-version: ['7.2']
                 db-type: [mysql]
-                symfony-version: [ '3-min', '4-max' ]
+                symfony-version: [ '3-min' ]
         steps:
             - name: Install PostgreSQL latest
               if: matrix.db-type == 'pgsql' && matrix.php-version == '7.4'
@@ -81,7 +81,8 @@ jobs:
 
             - name: Run Postgresql tests
               if: matrix.db-type == 'pgsql'
-              run: vendor/bin/phpunit -c pgsql.phpunit.xml
+              shell: 'script -q -e -c "bash {0}"'
+              run: vendor/bin/phpunit -c tests/pgsql.phpunit.xml
               env:
                   DB_NAME: 'propel-tests'
                   DB_USER: 'postgres'
@@ -89,4 +90,5 @@ jobs:
 
             - name: Run tests
               if: matrix.db-type != 'pgsql'
+              shell: 'script -q -e -c "bash {0}"'
               run: vendor/bin/phpunit -c tests/${{ matrix.db-type }}.phpunit.xml
